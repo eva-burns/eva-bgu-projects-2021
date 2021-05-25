@@ -37,3 +37,10 @@ class Snippet(models.Model):
             style=self.style, linenos=linenos, full=True, **options)
         self.highlighted = highlight(self.code, lexer, formatter)
         super(Snippet, self).save(*args, **kwargs)
+
+class Player(models.Model):
+    username = models.CharField(max_length=20)
+    score = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "Score for " + self.username + ": " + self.score

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from snippets.models import Snippet
+from snippets.models import Snippet, Player
 
 
 class SnippetSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,3 +22,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'id', 'username', 'snippets')
+
+
+class PlayerSerializer(serializers.HyperlinkedModelSerializer):
+
+    owner = serializers.ReadOnlyField(source='username')
+    highlight = serializers.HyperlinkedIdentityField(
+        view_name='player-highlight', format='html')
+
+    class Meta:
+        model = Player
+        fields = ('username', 'score')
