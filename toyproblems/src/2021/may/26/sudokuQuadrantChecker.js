@@ -3,29 +3,50 @@
 // Another example, if strArr is: ["(1,2,3,4,5,6,7,8,9)","(x,x,x,x,x,x,x,x,x)","(6,x,5,x,3,x,x,4,x)","(2,x,1,1,x,x,x,x,x)","(x,x,x,x,x,x,x,x,x)","(x,x,x,x,x,x,x,x,x)","(x,x,x,x,x,x,x,x,x)","(x,x,x,x,x,x,x,x,x)","(x,x,x,x,x,x,x,x,9)"] then your program should return 3,4,5,9.
 
 function sudokuQuadrantChecker(strArray) {
-  // Code goes here
-  var mat = toMatrix(strArray);
-  return checkNums[mat[0]];
-}
-
-function toMatrix(num) {
-  var mat = [];
-  for (var i = 0; i < num.length; i++) {
-    mat.push(num[i].split(/[,()]+/));
+  var board = [];
+  var illegal_quads = [];
+  for (var i = 0; i < strArray.length; i++) {
+    board.push(strArray[i].split(/[,()]+/));
   }
-  return mat;
-}
 
-function checkNums(arr) {
-  var wrong_idx = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] != "x" && i != arr.lastIndexOf(arr[i])) {
-      for (var j = i; j <= arr.lastIndexOf(arr[i]); j++) {
-        if (wrong_idx.indexOf(arr[j]) === -1) wrong_idx.push(arr[j]);
+  var rows = [];
+  var columns = [];
+  var boxes = [];
+
+  for (let i = 0; i < 9; i++) {
+    rows.push([]);
+    columns.push([]);
+    boxes.push([]);
+  }
+
+  for (let i = 0; i < board.length; i++) { 
+    for (let j = 0; j < board.length; j++) {
+
+      let cell = board[i][j];
+
+      if(cell !== "x") {
+        let boxIndex = Math.floor((i / 3)) * 3 + Math.floor(j / 3);
+
+        if (rows[i].includes(cell)) {
+          illegal_quads.push(boxIndex + 1);
+        } else rows[i].push(cell);
+
+        if (columns[j].includes(cell)) {
+          illegal_quads.push(boxIndex + 1);
+        } else columns[j].push(cell);
+
+        if (boxes[boxIndex].includes(cell)) {
+          illegal_quads.push(boxIndex + 1);
+        } else boxes[boxIndex].push(cell);
+
       }
     }
   }
-  return wrong_idx;
-}
+  if (illegal_quads.length === 0) {
+    return "legal";
+  }
+  illegal_quads = [...new Set(illegal_quads)];
+  return illegal_quads.sort().toString();
+  }
 
 module.exports = sudokuQuadrantChecker;
