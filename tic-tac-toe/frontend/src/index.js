@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function Square(props) {
   return (
@@ -55,6 +56,8 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      xStarted: true,
+      posted: false,
     };
   }
 
@@ -82,16 +85,38 @@ class Game extends React.Component {
     });
   }
 
-  render() {
+  componentDidMount() {
+    this.refreshList();
+  }
 
+  refreshList = () => {
+    axios
+      .get("/api/winners/")
+      .then((res) => this.setState({ winners: res.data }))
+      .catch((err) => console.log(err));
+  }
+
+  newGame = () => {
+    const xFirst = Math.floor(Math.random() * 2) ? true: false;
+    this.setState({
+      history: [{
+        squares: Array(9).fill(null),
+      }],
+      stepNumber: 0,
+      posted: false,
+      xIsNext: xFirst,
+    })
+  }
+
+  render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move number: ' + move :
-        'Go to move number: 0';
+        'Go to move: ' + move :
+        'Go to start';
       return (
         <li key={move}>
           <button
@@ -105,23 +130,21 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
-      axios({
-        method: 'post',
-        url: 'http://localhost:8000/snippets/',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        data: JSON.stringify({
-          winner: winner,
-        })
-      });
+      if (!this.state.posted) {
+        axios
+          .post("/api/winners/", { 'name': winner })
+          .then((res) => this.refreshList())
+          .catch((err) => console.log(err));
+        this.setState({ posted: true });
+      }
+
     } else if (calculateDraw(current.squares)) {
       status = 'Draw!';
     }
     else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
+
 
     return (
       <div>
@@ -140,8 +163,9 @@ class Game extends React.Component {
             />
           </div>
           <div className="game-info">
-            <div>{status}</div>
+            <div className="status">{status}</div>
             <ol>{moves}</ol>
+            <button onClick={this.newGame} className="newGameButton">New Game</button>
           </div>
         </div>
       </div>

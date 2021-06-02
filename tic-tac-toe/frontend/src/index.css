@@ -1,18 +1,11 @@
 body {
-  font: 20px "Century Gothic", Futura, sans-serif;
+  font: 50px "Century Gothic", Futura, sans-serif;
   margin: 20px;
 }
 
-ol,
-ul {
-  padding-left: 30px;
-  font: 16px "Century Gothic", Futura, sans-serif;
-}
-
-#move {
-    background: lightblue;
-    border: 1px solid #999;
-    font: 16px "Century Gothic", Futura, sans-serif;
+ol, ul {
+  padding-left: 0px;
+  list-style: none
 }
 
 .board-row:after {
@@ -22,22 +15,27 @@ ul {
 }
 
 .status {
+  margin-top: 20px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .square {
-  background: #fff;
-  border: 1px solid #999;
+  background: rgb(207, 207, 207);
+  border: 2px solid rgb(255, 255, 255);
   float: left;
-  font-size: 40px;
-  font-weight: bold;
-  line-height: 60px;
-  height: 60px;
+  color:black;
+  font-size: 85pt;
+  line-height: 34px;
+  height: 175px;
   margin-right: -1px;
   margin-top: -1px;
-  padding: 0;
   text-align: center;
-  width: 60px;
+  width: 175px;
+}
+
+.square:hover {
+  background: rgb(184, 184, 184);
 }
 
 .square:focus {
@@ -54,5 +52,50 @@ ul {
 }
 
 .game-info {
-  margin-left: 20px;
+  margin-left: 200px;
+  font-size: 24pt;
+  font-family: "Century Gothic", Futura, sans-serif;
+}
+
+.revertButton {
+  height: 50px;
+  width: 200px;
+  background: #2f3dff;
+  border: 1px solid #2f3dff;
+  font-size:14pt;
+  font-family: "Century Gothic", Futura, sans-serif;
+  color:white;
+  
+}
+
+.revertButton:hover {
+  background: #0011ff;
+}
+
+.revertButton:focus {
+  background: #0011ff;
+}
+
+.title {
+  font-size: 50px;
+  text-align: center;
+  font-family: "Century Gothic", Futura, sans-serif;
+  padding-top: 50px;
+  
+}
+
+.newGameButton {
+  height: 50px;
+  width: 200px;
+  background: #ff8d30;
+  border: 1px solid #ff8d30;
+  font-size:14pt;
+  font-family: "Century Gothic", Futura, sans-serif;
+  color:white;
+  padding-bottom: 0px;
+  position: relative;
+}
+
+.newGameButton:hover {
+  background: #ff7300;
 }
