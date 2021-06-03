@@ -1,11 +1,19 @@
 body {
   font: 50px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
 }
 
 ol, ul {
   padding-left: 0px;
-  list-style: none
+  list-style: none;
+  font-size: 18pt;
+}
+
+.footer {
+  margin-left: 15%;
+  font-size: 24pt;
+  font-family: "Century Gothic", Futura, sans-serif;
+  position: relative;
+  top: 170px;
 }
 
 .board-row:after {
@@ -21,10 +29,10 @@ ol, ul {
 }
 
 .square {
-  background: rgb(207, 207, 207);
+  background: #ffb87d;
   border: 2px solid rgb(255, 255, 255);
   float: left;
-  color:black;
+  color:#000baa;
   font-size: 85pt;
   line-height: 34px;
   height: 175px;
@@ -35,7 +43,7 @@ ol, ul {
 }
 
 .square:hover {
-  background: rgb(184, 184, 184);
+  background: #ff8d30;
 }
 
 .square:focus {
@@ -52,20 +60,21 @@ ol, ul {
 }
 
 .game-info {
-  margin-left: 200px;
+  margin-left: 75%;
   font-size: 24pt;
   font-family: "Century Gothic", Futura, sans-serif;
+  position: relative;
+  top: -50px;
 }
 
 .revertButton {
   height: 50px;
   width: 200px;
   background: #2f3dff;
-  border: 1px solid #2f3dff;
+  border: 1px solid white;
   font-size:14pt;
   font-family: "Century Gothic", Futura, sans-serif;
   color:white;
-  
 }
 
 .revertButton:hover {
@@ -87,8 +96,8 @@ ol, ul {
 .newGameButton {
   height: 50px;
   width: 200px;
-  background: #ff8d30;
-  border: 1px solid #ff8d30;
+  background: #2f3dff;
+  border: 1px solid #2f3dff;
   font-size:14pt;
   font-family: "Century Gothic", Futura, sans-serif;
   color:white;
@@ -97,5 +106,6 @@ ol, ul {
 }
 
 .newGameButton:hover {
-  background: #ff7300;
+  background: #0011ff;
 }
+

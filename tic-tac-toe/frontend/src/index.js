@@ -58,7 +58,9 @@ class Game extends React.Component {
       xIsNext: true,
       xStarted: true,
       posted: false,
+      winners: [],
     };
+    this.refreshList();
   }
 
   handleClick(i) {
@@ -97,7 +99,7 @@ class Game extends React.Component {
   }
 
   newGame = () => {
-    const xFirst = Math.floor(Math.random() * 2) ? true: false;
+    const xFirst = Math.floor(Math.random() * 2) ? true : false;
     this.setState({
       history: [{
         squares: Array(9).fill(null),
@@ -106,6 +108,26 @@ class Game extends React.Component {
       posted: false,
       xIsNext: xFirst,
     })
+  }
+
+  getXCount() {
+    let xCount = 0;
+    for (var i = 0; i < this.state.winners.length; i++) {
+      if (this.state.winners[i].name === "X") {
+        xCount++;
+      }
+    }
+    return `X: ${xCount}`
+  }
+
+  getOCount() {
+    let oCount = 0;
+    for (var i = 0; i < this.state.winners.length; i++) {
+      if (this.state.winners[i].name === "O") {
+        oCount++;
+      }
+    }
+    return `O: ${oCount}`
   }
 
   render() {
@@ -151,6 +173,14 @@ class Game extends React.Component {
         <div className="title">
           <h1>Tic-Tac-Toe</h1>
         </div>
+        <div className="footer">
+          <h3>Winner Count</h3>
+          <ol>
+            <li>{this.getXCount()}</li>
+            <li>{this.getOCount()}</li>
+          </ol>
+          <button onClick={this.newGame} className="newGameButton">New Game</button>
+        </div>
         <div className="game">
           <div className="game-board"
             style={{
@@ -165,9 +195,10 @@ class Game extends React.Component {
           <div className="game-info">
             <div className="status">{status}</div>
             <ol>{moves}</ol>
-            <button onClick={this.newGame} className="newGameButton">New Game</button>
+            
           </div>
         </div>
+
       </div>
     );
   }
